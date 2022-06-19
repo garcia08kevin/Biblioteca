@@ -5,7 +5,6 @@ namespace Biblioteca.DTO
 {
     public class UserForAuthenticationDto
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "Se requiere Email.")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Ser requiere contraseña.")]

@@ -8,6 +8,9 @@
         public int Telefono { get; set; }
         public int Cedula { get; set; }
         public string Direccion { get; set; }
+        public string Barrio { get; set; }
+        public int CuidadId { get; set; }
+        public Cuidad? Cuidad { get; set; }
 
     }
 }

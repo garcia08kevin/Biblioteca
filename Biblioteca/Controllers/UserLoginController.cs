@@ -2,33 +2,36 @@
 using Biblioteca.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserLoginController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly UserManager<UserLogin> _userManager;
 
-        public UserLoginController(DataContext context)
+        public UserLoginController(DataContext context, UserManager<UserLogin> userManager)
         {
-            _context = context;
+            _context = context;            
+            userManager = _userManager;
         }
 
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLogin()
         {
             return await _context.Userlogin.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Barrio>> GetUserLogin(int id)
+        public async Task<ActionResult<UserLogin>> GetUserLogin(int id)
         {
             var user = await _context.Userlogin.FindAsync(id);
 
@@ -43,7 +46,7 @@ namespace Biblioteca.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserLogin(int id, UserLogin userLogin)
         {
-            if (id != Int32.Parse(userLogin.Id))
+            if (    id != userLogin.Id)
             {
                 return BadRequest();
             }
@@ -75,20 +78,20 @@ namespace Biblioteca.Controllers
             _context.Userlogin.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserLogin", new { id = Int32.Parse(user.Id) }, user);
+            return CreatedAtAction("GetUserLogin", new { id = user.Id }, user);
         }
 
         // DELETE: api/Barrios/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBarrio(int id)
         {
-            var barrio = await _context.Barrios.FindAsync(id);
-            if (barrio == null)
+            var usuario = await _context.Userlogin.FindAsync(id);
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            _context.Barrios.Remove(barrio);
+            _context.Userlogin.Remove(usuario);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -96,7 +99,7 @@ namespace Biblioteca.Controllers
 
         private bool UserLoginExists(int id)
         {
-            return _context.Userlogin.Any(e => (Int32.Parse(e.Id)) == id);
-        }
+            return _context.Userlogin.Any(e => e.Id == id);
+        }        
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Biblioteca.Models
 {
-    public class Provincia
+    public class EstadoPaquete
     {
         public int ID { get; set; }
-        public string Nombre { get; set; }
+        public string Paquete { get; set; }
     }
 }

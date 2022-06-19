@@ -12,39 +12,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220509024323_InitialCreate")]
+    [Migration("20220613165241_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Biblioteca.Models.Barrio", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("CuidadId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CuidadId");
-
-                    b.ToTable("Barrios");
-                });
 
             modelBuilder.Entity("Biblioteca.Models.Cliente", b =>
                 {
@@ -58,7 +36,14 @@ namespace Biblioteca.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Barrio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Cedula")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CuidadId")
                         .HasColumnType("int");
 
                     b.Property<string>("Direccion")
@@ -73,6 +58,8 @@ namespace Biblioteca.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CuidadId");
 
                     b.ToTable("Clientes");
                 });
@@ -89,14 +76,26 @@ namespace Biblioteca.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProvinciaId")
+                    b.HasKey("ID");
+
+                    b.ToTable("Cuidad");
+                });
+
+            modelBuilder.Entity("Biblioteca.Models.EstadoPaquete", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Paquete")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ProvinciaId");
-
-                    b.ToTable("Cuidad");
+                    b.ToTable("EstadoPaquetes");
                 });
 
             modelBuilder.Entity("Biblioteca.Models.Paquete", b =>
@@ -107,9 +106,6 @@ namespace Biblioteca.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("BarrioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
@@ -117,48 +113,29 @@ namespace Biblioteca.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Entregado")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("EsFragil")
-                        .HasColumnType("bit");
+                    b.Property<int?>("EstadoPaqueteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("FechaEntrega")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NombreCLiente")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NivelFragilidad")
+                        .HasColumnType("int");
 
                     b.Property<int>("TamanioPaqueteId")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BarrioId");
-
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("EstadoPaqueteId");
 
                     b.HasIndex("TamanioPaqueteId");
 
                     b.ToTable("Paquetes");
-                });
-
-            modelBuilder.Entity("Biblioteca.Models.Provincia", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Provincias");
                 });
 
             modelBuilder.Entity("Biblioteca.Models.TamanioPaquete", b =>
@@ -178,35 +155,13 @@ namespace Biblioteca.Migrations
                     b.ToTable("TamanioPaquetes");
                 });
 
-            modelBuilder.Entity("Biblioteca.Models.User", b =>
+            modelBuilder.Entity("Biblioteca.Models.UserLogin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Clave")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreUsuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("Biblioteca.Models.UserLogin", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -316,6 +271,44 @@ namespace Biblioteca.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "efc5a6c3-37f9-4ab7-a34d-ebbc71311913",
+                            ConcurrencyStamp = "32721cf5-c4d5-4a0c-b474-14a7423f8ac5",
+                            Name = "Viewer",
+                            NormalizedName = "VIEWER"
+                        },
+                        new
+                        {
+                            Id = "17ab9683-2b01-43be-8a09-17d3ec2062f1",
+                            ConcurrencyStamp = "5fa3f87e-1a92-4e7c-9127-cbe6cf3c3f05",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
@@ -335,25 +328,9 @@ namespace Biblioteca.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "d8dbbb5d-42ed-4182-a3d6-654c35d62cfe",
-                            ConcurrencyStamp = "ca589c69-767c-41f1-af1f-b49acc233227",
-                            Name = "Viewer",
-                            NormalizedName = "VIEWER"
-                        },
-                        new
-                        {
-                            Id = "e666d057-2acc-4015-991d-b910c820aa3f",
-                            ConcurrencyStamp = "20f6d326-c83b-4ad6-a30b-3634348470e0",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -367,9 +344,8 @@ namespace Biblioteca.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -378,7 +354,7 @@ namespace Biblioteca.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -392,23 +368,17 @@ namespace Biblioteca.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserLoginId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserLoginId");
-
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -419,9 +389,8 @@ namespace Biblioteca.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -430,13 +399,13 @@ namespace Biblioteca.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -445,10 +414,10 @@ namespace Biblioteca.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -464,7 +433,7 @@ namespace Biblioteca.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Biblioteca.Models.Barrio", b =>
+            modelBuilder.Entity("Biblioteca.Models.Cliente", b =>
                 {
                     b.HasOne("Biblioteca.Models.Cuidad", "Cuidad")
                         .WithMany()
@@ -475,30 +444,17 @@ namespace Biblioteca.Migrations
                     b.Navigation("Cuidad");
                 });
 
-            modelBuilder.Entity("Biblioteca.Models.Cuidad", b =>
-                {
-                    b.HasOne("Biblioteca.Models.Provincia", "Provincia")
-                        .WithMany()
-                        .HasForeignKey("ProvinciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Provincia");
-                });
-
             modelBuilder.Entity("Biblioteca.Models.Paquete", b =>
                 {
-                    b.HasOne("Biblioteca.Models.Barrio", "Barrio")
-                        .WithMany()
-                        .HasForeignKey("BarrioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Biblioteca.Models.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Biblioteca.Models.EstadoPaquete", "EstadoPaquete")
+                        .WithMany()
+                        .HasForeignKey("EstadoPaqueteId");
 
                     b.HasOne("Biblioteca.Models.TamanioPaquete", "TamanioPaquete")
                         .WithMany()
@@ -506,9 +462,9 @@ namespace Biblioteca.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Barrio");
-
                     b.Navigation("Cliente");
+
+                    b.Navigation("EstadoPaquete");
 
                     b.Navigation("TamanioPaquete");
                 });
@@ -528,29 +484,16 @@ namespace Biblioteca.Migrations
                     b.Navigation("Vehiculo");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Biblioteca.Models.UserLogin", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Biblioteca.Models.UserLogin", null)
-                        .WithMany("IdentityUserClaim")
-                        .HasForeignKey("UserLoginId");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("Biblioteca.Models.UserLogin", null)
                         .WithMany()
@@ -559,9 +502,18 @@ namespace Biblioteca.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Biblioteca.Models.UserLogin", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -574,18 +526,13 @@ namespace Biblioteca.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("Biblioteca.Models.UserLogin", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Biblioteca.Models.UserLogin", b =>
-                {
-                    b.Navigation("IdentityUserClaim");
                 });
 #pragma warning restore 612, 618
         }

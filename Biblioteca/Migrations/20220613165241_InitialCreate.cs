@@ -13,7 +13,8 @@ namespace Biblioteca.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -24,24 +25,7 @@ namespace Biblioteca.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clientes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefono = table.Column<int>(type: "int", nullable: false),
-                    Cedula = table.Column<int>(type: "int", nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Provincias",
+                name: "Cuidad",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -50,7 +34,34 @@ namespace Biblioteca.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Provincias", x => x.ID);
+                    table.PrimaryKey("PK_Cuidad", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EstadoPaquetes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Paquete = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EstadoPaquetes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IdentityRole",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityRole", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,21 +75,6 @@ namespace Biblioteca.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TamanioPaquetes", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Clave = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +96,7 @@ namespace Biblioteca.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -116,21 +112,26 @@ namespace Biblioteca.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cuidad",
+                name: "Clientes",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProvinciaId = table.Column<int>(type: "int", nullable: false)
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefono = table.Column<int>(type: "int", nullable: false),
+                    Cedula = table.Column<int>(type: "int", nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Barrio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CuidadId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cuidad", x => x.ID);
+                    table.PrimaryKey("PK_Clientes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cuidad_Provincias_ProvinciaId",
-                        column: x => x.ProvinciaId,
-                        principalTable: "Provincias",
+                        name: "FK_Clientes_Cuidad_CuidadId",
+                        column: x => x.CuidadId,
+                        principalTable: "Cuidad",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -139,7 +140,8 @@ namespace Biblioteca.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CiudadId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
@@ -176,21 +178,36 @@ namespace Biblioteca.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Barrios",
+                name: "Paquetes",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CuidadId = table.Column<int>(type: "int", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NivelFragilidad = table.Column<int>(type: "int", nullable: false),
+                    EstadoPaqueteId = table.Column<int>(type: "int", nullable: true, defaultValue: 1),
+                    TamanioPaqueteId = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Barrios", x => x.ID);
+                    table.PrimaryKey("PK_Paquetes", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Barrios_Cuidad_CuidadId",
-                        column: x => x.CuidadId,
-                        principalTable: "Cuidad",
+                        name: "FK_Paquetes_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Paquetes_EstadoPaquetes_EstadoPaqueteId",
+                        column: x => x.EstadoPaqueteId,
+                        principalTable: "EstadoPaquetes",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Paquetes_TamanioPaquetes_TamanioPaqueteId",
+                        column: x => x.TamanioPaqueteId,
+                        principalTable: "TamanioPaquetes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -201,10 +218,9 @@ namespace Biblioteca.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserLoginId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -215,11 +231,6 @@ namespace Biblioteca.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserLoginId",
-                        column: x => x.UserLoginId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +240,7 @@ namespace Biblioteca.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,8 +257,8 @@ namespace Biblioteca.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -270,7 +281,7 @@ namespace Biblioteca.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -286,53 +297,15 @@ namespace Biblioteca.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Paquetes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreCLiente = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Entregado = table.Column<bool>(type: "bit", nullable: false),
-                    EsFragil = table.Column<bool>(type: "bit", nullable: false),
-                    TamanioPaqueteId = table.Column<int>(type: "int", nullable: false),
-                    BarrioId = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Paquetes", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Paquetes_Barrios_BarrioId",
-                        column: x => x.BarrioId,
-                        principalTable: "Barrios",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Paquetes_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Paquetes_TamanioPaquetes_TamanioPaqueteId",
-                        column: x => x.TamanioPaqueteId,
-                        principalTable: "TamanioPaquetes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.InsertData(
+                table: "IdentityRole",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "17ab9683-2b01-43be-8a09-17d3ec2062f1", "5fa3f87e-1a92-4e7c-9127-cbe6cf3c3f05", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
+                table: "IdentityRole",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "d8dbbb5d-42ed-4182-a3d6-654c35d62cfe", "ca589c69-767c-41f1-af1f-b49acc233227", "Viewer", "VIEWER" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e666d057-2acc-4015-991d-b910c820aa3f", "20f6d326-c83b-4ad6-a30b-3634348470e0", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "efc5a6c3-37f9-4ab7-a34d-ebbc71311913", "32721cf5-c4d5-4a0c-b474-14a7423f8ac5", "Viewer", "VIEWER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -350,11 +323,6 @@ namespace Biblioteca.Migrations
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserLoginId",
-                table: "AspNetUserClaims",
-                column: "UserLoginId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
@@ -389,24 +357,19 @@ namespace Biblioteca.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Barrios_CuidadId",
-                table: "Barrios",
+                name: "IX_Clientes_CuidadId",
+                table: "Clientes",
                 column: "CuidadId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cuidad_ProvinciaId",
-                table: "Cuidad",
-                column: "ProvinciaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Paquetes_BarrioId",
-                table: "Paquetes",
-                column: "BarrioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Paquetes_ClienteId",
                 table: "Paquetes",
                 column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Paquetes_EstadoPaqueteId",
+                table: "Paquetes",
+                column: "EstadoPaqueteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Paquetes_TamanioPaqueteId",
@@ -432,10 +395,10 @@ namespace Biblioteca.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Paquetes");
+                name: "IdentityRole");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Paquetes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -444,10 +407,10 @@ namespace Biblioteca.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Barrios");
+                name: "Clientes");
 
             migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "EstadoPaquetes");
 
             migrationBuilder.DropTable(
                 name: "TamanioPaquetes");
@@ -457,9 +420,6 @@ namespace Biblioteca.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cuidad");
-
-            migrationBuilder.DropTable(
-                name: "Provincias");
         }
     }
 }

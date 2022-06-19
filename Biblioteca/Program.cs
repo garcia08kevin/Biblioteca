@@ -4,12 +4,15 @@ using Biblioteca.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-    using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IdentityModel.Tokens.Jwt;
 using Biblioteca.JwtFeatures;
+using Biblioteca.Configuration;
+using Biblioteca.Controllers;
+using System.Security.Claims;
 
 var myArrowSpecificOrigins = "myArrowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -28,14 +31,14 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<JwtHandler>();
 
-builder.Services.AddIdentity<UserLogin, IdentityRole>(opt =>
+builder.Services.AddIdentity<UserLogin, IdentityRole<int>>(opt =>
 {
     opt.Password.RequiredLength = 6;
     opt.Password.RequireDigit = false;
-    opt.Password.RequireNonAlphanumeric= false;
-    opt.Password.RequireUppercase= false;
-    opt.Password.RequireLowercase= false;
-    opt.User.RequireUniqueEmail = true; 
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireLowercase = false;
+    opt.User.RequireUniqueEmail = true;
 })
     .AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
@@ -66,6 +69,9 @@ builder.Services.AddAutoMapper(mc =>
     mc.AddProfile(new MappingProfile());
 });
 
+builder.Services.AddTransient<ClaimsPrincipal>(
+                s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myArrowSpecificOrigins,
@@ -85,6 +91,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+builder.Services.AddHttpContextAccessor();
 
 app.UseHttpsRedirection();
 

@@ -16,10 +16,11 @@ namespace Biblioteca.Controllers
     public class PaquetesController : ControllerBase
     {
         private readonly DataContext _context;
-
+        private DbSet<Paquete> _dbSet;       
         public PaquetesController(DataContext context)
         {
             _context = context;
+            _dbSet = _context.Set<Paquete>();
         }
 
         // GET: api/Paquetes
@@ -45,33 +46,43 @@ namespace Biblioteca.Controllers
 
         // PUT: api/Paquetes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPaquete(int id, Paquete paquete)
+        public async Task<IActionResult> PutPaqueteComprobacion(int id, Paquete paquete, int CiudadUsuario)
         {
-            if (id != paquete.ID)
+            
+            var clientes = _context.Clientes.Find(paquete.ClienteId);
+            if (clientes.CuidadId == CiudadUsuario)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(paquete).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PaqueteExists(id))
+                if (id != paquete.ID)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(paquete).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PaqueteExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("EL USUARIO NO TIENE PERMISO PARA ENTREGAR ESTE PEDIDO");
+            }            
         }
 
         // POST: api/Paquetes

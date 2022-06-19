@@ -20,13 +20,28 @@ namespace Biblioteca.Controllers
         private readonly UserManager<UserLogin> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly ClaimsPrincipal _caller;
 
-        public AccountsController(DataContext context,UserManager<UserLogin> userManager, IMapper mapper, JwtHandler jwtHandler)
+
+        public AccountsController(ClaimsPrincipal caller,IHttpContextAccessor httpContext, DataContext context,UserManager<UserLogin> userManager, IMapper mapper, JwtHandler jwtHandler)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
             _context = context;
+            _httpContext = httpContext;
+            _caller = caller;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<UserLogin>> GetUserLogin()
+        {
+            ClaimsPrincipal currentUser = this.User;            
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+            var user = await _context.Userlogin.FindAsync(userId);
+            return user;
         }
         [HttpGet("ControlUser")]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUser()
@@ -63,7 +78,7 @@ namespace Biblioteca.Controllers
             var claims = await _jwtHandler.GetClaims(user);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token});
         }        
 
     }
