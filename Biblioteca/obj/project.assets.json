@@ -10829,11 +10829,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\Biblioteca.csproj",
+      "projectUniqueName": "C:\\Users\\garci\\source\\repos\\BibliotecaDeploy\\Biblioteca\\Biblioteca.csproj",
       "projectName": "Biblioteca",
-      "projectPath": "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\Biblioteca.csproj",
+      "projectPath": "C:\\Users\\garci\\source\\repos\\BibliotecaDeploy\\Biblioteca\\Biblioteca.csproj",
       "packagesPath": "C:\\Users\\garci\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\obj\\",
+      "outputPath": "C:\\Users\\garci\\source\\repos\\BibliotecaDeploy\\Biblioteca\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\garci\\AppData\\Roaming\\NuGet\\NuGet.Config",
