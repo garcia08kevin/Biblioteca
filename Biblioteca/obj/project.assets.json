@@ -10894,19 +10894,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj",
       "projectName": "Biblioteca",
       "projectPath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj",
       "packagesPath": "C:\\Users\\garci\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj",
-      "projectName": "Biblioteca",
-      "projectPath": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj",
-      "packagesPath": "C:\\Users\\garci\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\obj\\",
->>>>>>> 2c4ef4976798f2c204a6facfa786c98e36c76e1e
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\garci\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11043,6 +11035,12 @@
     }
   },
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema al leer el archivo de caché C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",
