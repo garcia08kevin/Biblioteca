@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\Biblioteca.csproj": {}
+    "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj": {}
   },
   "projects": {
-    "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\Biblioteca.csproj": {
+    "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\Biblioteca.csproj",
+        "projectUniqueName": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj",
         "projectName": "Biblioteca",
-        "projectPath": "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\Biblioteca.csproj",
+        "projectPath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj",
         "packagesPath": "C:\\Users\\garci\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\garci\\source\\repos\\Biblioteca2\\Biblioteca\\obj\\",
+        "outputPath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\garci\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -109,6 +109,10 @@
               "version": "[1.15.1, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[6.0.5, )"
             },
