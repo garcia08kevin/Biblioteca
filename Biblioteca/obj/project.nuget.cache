@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "NOABZ64qKQo2QpGuH9IJwMr7gORAtoXOt1xY/4e7HUzP0hbhTo52Q/AITJjMKjnt9N3RatEyDSG72WOuV/QD5g==",
   "success": true,
   "projectFilePath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj",
+=======
+  "dgSpecHash": "4V7qlmNbnhzCJKdhT5CmjCURIjJqI8DtIqhJup1zjrUilOTUoJyRFfVPOhYlYG2fe5Bd82FHljIxUj0K386UaA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj",
+>>>>>>> 2c4ef4976798f2c204a6facfa786c98e36c76e1e
   "expectedPackageFiles": [
     "C:\\Users\\garci\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\garci\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

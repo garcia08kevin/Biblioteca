@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\Biblioteca.csproj",
         "packagesPath": "C:\\Users\\garci\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\garci\\source\\repos\\garcia08kevin\\deliveryBackend\\Biblioteca\\obj\\",
+=======
+    "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj",
+        "projectName": "Biblioteca",
+        "projectPath": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\Biblioteca.csproj",
+        "packagesPath": "C:\\Users\\garci\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\garci\\source\\repos\\Biblioteca\\Biblioteca\\obj\\",
+>>>>>>> 2c4ef4976798f2c204a6facfa786c98e36c76e1e
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\garci\\AppData\\Roaming\\NuGet\\NuGet.Config",
