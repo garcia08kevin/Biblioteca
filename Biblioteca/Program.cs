@@ -83,6 +83,9 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("https://kgdeliverybackend.herokuapp.com")
             .AllowAnyMethod()
             .AllowAnyHeader();
+            builder.WithOrigins("https://kgdeliverybackend.herokuapp.com/api/paquetes")
+            .AllowAnyMethod()
+            .AllowAnyHeader();            
         });        
 });
 
