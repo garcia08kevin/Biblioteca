@@ -77,7 +77,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: myArrowSpecificOrigins,
         builder =>
         {
-            builder.WithOrigins("https://deliveryfrontendkg.web.app/")
+            builder.WithOrigins("https://deliveryfrontendkg.web.app")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+        builder =>
+        {
+            builder.WithOrigins("https://kgdeliverybackend.herokuapp.com")
             .AllowAnyMethod()
             .AllowAnyHeader();
         });
