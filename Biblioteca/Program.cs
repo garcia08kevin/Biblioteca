@@ -80,13 +80,7 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("https://deliveryfrontendkg.web.app")
             .AllowAnyMethod()
             .AllowAnyHeader();
-        });
-        builder =>
-        {
-            builder.WithOrigins("https://kgdeliverybackend.herokuapp.com")
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-        });
+        });        
 });
 
 var app = builder.Build();
